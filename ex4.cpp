@@ -1,11 +1,9 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 int main()
 {
     char C[10];
-    string c;
     bool ok = true;
     int i=0; 
     int open = 0, closed = 0;
@@ -17,14 +15,13 @@ int main()
     i = 0;
     while (i<10)
     {
-        c = C[i];
-        if (open == closed && c == ")") {
+        if (open == closed && C[i] == ')') {
             ok = false;
             break;
         }
-        if (c == "(") {
+        if (C[i] == '(') {
             open++;
-        } else if (c == ")") {
+        } else if (C[i] == ')') {
             closed++;
         }
         i++;
