@@ -55,11 +55,37 @@ bool mod(bool (*A)[8]) {
 
 // PRE = Riceve Palude, la lunghezza del cammino ed un array vuoto
 void build_path(bool (*A)[8], int size, int (*I)) {
+    int lastIndex;
     for (int i=0; i<size; i++) {
-        for (int j=0; j<size; j++) {
-            if (A[i][j] == 1) {
-                I[i] = j;
-                break;
+        if (A[7][i] == 1) {
+            lastIndex = i; // salva l'indice dell'ultimo elemento del cammino
+        }
+    }
+    I[7] = lastIndex; 
+    for (int i=6; i>=0; i--) {
+        if (lastIndex == 0) {
+            if (A[i][lastIndex] == 1) {
+                I[i] = lastIndex;
+            } else if (A[i][lastIndex+1] == 1) {
+                lastIndex = lastIndex + 1;
+                I[i] = lastIndex;
+            }
+        } else if (lastIndex == 7) {
+            if (A[i][lastIndex] == 1) {
+                I[i] = lastIndex;
+            } else if (A[i][lastIndex-1] == 1) {
+                lastIndex = lastIndex - 1;
+                I[i] = lastIndex;
+            }
+        } else {
+            if (A[i][lastIndex] == 1) {
+                I[i] = lastIndex;
+            } else if (A[i][lastIndex+1] == 1) {
+                lastIndex = lastIndex + 1;
+                I[i] = lastIndex;
+            } else if (A[i][lastIndex-1] == 1) {
+                lastIndex = lastIndex - 1;
+                I[i] = lastIndex;
             }
         }
     }
@@ -90,5 +116,5 @@ DIMOSTRAZIONE DI CORRETTEZZA SU mod
 (1) mod riceve Palude, i=1 && non ho controllato nulla => vale R
 (2) i=k && ho controllato A[1..k-1][0..7] => i=k+1 && ho controllato A[1..k][0..7]
 (3) i=8 && ho controllato A[1..7][0..7] e modificato tutto => vale POST
-
+    
 */
