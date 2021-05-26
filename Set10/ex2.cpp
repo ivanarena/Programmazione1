@@ -56,7 +56,7 @@ void sc(int*C) {
 bool cerca_cam(nodo* r, int k, int y, int* C) {
     // base cases 
     if (!r->left && !r->right) { // if r leaf
-        if (k == 0 || (r->info == y && k == 1)) { // y found k times or found k-1 times and current node->info == y
+        if ((k == 0 && r->info != y) || (k == 1 && r->info == y)) { // y found k times or found k-1 times and current node->info == y
             *C = -1; // sets array end
             return true;
         } else {
