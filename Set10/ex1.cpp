@@ -31,10 +31,13 @@ nodo* clone(nodo*L) {
 // PRE = (Lista(L) ben formata e ordinata, x punta ad un nodo)
 nodo* insOrd_ric(nodo* L, nodo* x) {
     if (!L) { // empty list
-        return new nodo(x->info, 0);
+        x->next = 0;
+        return x;
     } else {
         if (L->info >= x->info) {
-            return new nodo(x->info, L); // x position found, insert and point to the rest of the list
+            x->next = L;
+            L = x;
+            return x; // or: return L;
         } else {
             // PRE_RIC = (Lista(L) contiene almeno un nodo con campo info minore di quello di x)
             L->next = insOrd_ric(L->next, x); // L points to L->next until it finds x position
@@ -50,28 +53,34 @@ nodo* insOrd_iter(nodo* L, nodo*x) {
     bool ok = false; // boolean check
     
     if (!L) { // empty list
-        L = new nodo(x->info, 0); 
+        x->next = 0;
+        L = x; 
         ok = true;
     } else if (!L->next) { // only node
         if (L->info >= x->info) {
-            L = new nodo(x->info, L);
+            x->next = L;
+            L = x;
             ok = true;
         } else {
-            L->next = new nodo(x->info, 0);
+            x->next = 0;
+            L->next = x;
             ok = true;
         }
     } else if (L->info >= x->info) { // x should be first node
-        L = new nodo(x->info, L);
+        x->next = L;
+        L = x;
         ok = true;
     }
 
     nodo* T = L; // stores full list
     while (L->next && !ok) { // R = (L(L) non vuota e ok vero sse x è stato inserito)
         if (L->next->info >= x->info) {
-            L->next = new nodo(x->info, L->next); 
+            x->next = L->next;
+            L->next = x;
             ok = true; // exit loop
         } else if (!L->next->next && L->next->info <= x->info) { // x should be last node
-            L->next->next = new nodo(x->info, 0);
+            x->next = 0;
+            L->next->next = x;
             ok = true; // exit loop
         } else {
             L = L->next; // go to the next node
