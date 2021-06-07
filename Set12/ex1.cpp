@@ -40,7 +40,7 @@ void stampaL(nodo *L)
     }
 }
 
-// PRE=(L(L) ben formata, k>=y, vL=L)
+// PRE=(L(L) ben formata, k>=0, vL=L)
 nodo* elimI(nodo*L, int &n, int k, int y) {
     if (!L || (n == k)) { // L vuota o trovati k nodi con info=y
         return L;
@@ -66,7 +66,7 @@ nodo* elimI(nodo*L, int &n, int k, int y) {
 }
 // POST=(se vL contiene almeno k nodi con info=y, allora L è ottenuta da vL eliminando i primi k nodi con info=y di vL, altrimenti, L=vL) &&( se nodi di vL vengono cancellati, essi vanno deallocati)
 
-// PRE=(L(L) ben formata, k>=y, vL=L)
+// PRE=(L(L) ben formata, k>=0, vL=L)
 nodo* elimF(nodo*L, int &n, int k, int y) {
     if (!L) {
         if (n >= k) { // controlla se ci sono almeno k nodi con campo info = y
